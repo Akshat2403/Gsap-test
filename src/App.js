@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
+import { useLayoutEffect } from "react";
+gsap.registerPlugin(ScrollTrigger);
 function App() {
+  useLayoutEffect(() => {
+    let ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".blue",
+          markers: true,
+          start: "top 0%",
+          end: "bottom -100%",
+          scrub: true,
+          pin: true,
+        },
+      });
+    });
+    return () => {
+      ctx.revert();
+    };
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="red"></div>
+      <div className="blue"></div>
+      <div className="green"></div>
+    </>
   );
 }
 
